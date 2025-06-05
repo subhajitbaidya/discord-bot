@@ -1,12 +1,14 @@
 const express = require("express");
-const PORT = 2000;
+
+const ScrapeRouter = require("./routes/scrapper.js");
+
+require("./bot/bot.js");
 
 const app = express();
+const PORT = 3000;
 
-app.get("/", (req, res) => {
-  res.end("Welcome to express");
-});
+app.use("/", ScrapeRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server running on PORT ${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}/scrape`);
 });
