@@ -5,7 +5,7 @@ const ScrapeRouter = require("./routes/scrapper.js");
 require("./bot/bot.js");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 8000;
 
 app.use("/", ScrapeRouter);
 

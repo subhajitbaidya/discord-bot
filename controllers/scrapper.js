@@ -1,7 +1,6 @@
 // Test
 const { Scrapper } = require("../services/scrapper.js");
-const targetURL =
-  "https://www.geeksforgeeks.org/python-programming-language-tutorial/";
+const targetURL = "https://www.geeksforgeeks.org/";
 
 async function ScrapTextData(req, res) {
   try {
