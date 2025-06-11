@@ -29,10 +29,16 @@ An interactive discord bot to communicate with users and scrape text data from p
 
 ---
 
+## API Docs
+- You can access the API endpoint at http://localhost:<your-port>/scrape to view the generated responses and can use it in other apps. 
+- Requests GET
+
 ## 📦 Installation
 
 Go to discord and create a server and bot
 Use the bot token in order to interact with the bot using Node Js. 
+
+
 
 
 Clone the repo:
@@ -55,3 +61,4 @@ Ollama: [For ml models to run locally](https://ollama.com/)
 ## Future Implementations
 - Deploy the bot
 - Create authorization to access API
+- Set up Github Actions for CI/CD

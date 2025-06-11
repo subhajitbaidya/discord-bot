@@ -2,6 +2,7 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const { Scrapper } = require("../services/scrapper.js");
 const { data, splitMessage } = require("../services/chat/data.js");
 const { runMlModel } = require("../services/chat/mlModel.js");
+const ScrapedData = require("../models/scrapper.js");
 require("dotenv").config();
 const client = new Client({
   intents: [
@@ -32,16 +33,15 @@ client.on("messageCreate", async (message) => {
       const prompt = data(rawData);
       const response = await runMlModel(prompt);
 
-      // db create
-
       const summary = splitMessage(response);
+      await ScrapedData.create({ text: response });
 
       for (const chunk of summary) {
         await message.reply({ content: chunk });
       }
-
     } catch (error) {
       console.error("error generating response!,", error);
+      message.reply("❌ Something went wrong! Please try again later.");
     }
   }
 });
