@@ -37,6 +37,7 @@ An interactive discord bot to communicate with users and scrape text data from p
 ## API Docs
 
 - You can access the API endpoint at ```http://localhost:<your-port>/scrape``` to view the generated responses and can use it in other apps.
+It is not deployed yet so please setup the local environment and access the endpoint. 
 - Requests GET
 
 ___
