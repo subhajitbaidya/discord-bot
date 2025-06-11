@@ -15,8 +15,8 @@ An interactive discord bot to communicate with users and scrape text data from p
 ## 📸 Demo
 
 
-![After running /scrape command](image.png)
-![LLM response](image-1.png)
+![After running /scrape command](Images/image.png)
+![LLM response](Images/image-1.png)
 
 
 ---
