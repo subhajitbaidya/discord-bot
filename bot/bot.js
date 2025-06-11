@@ -11,35 +11,84 @@ const client = new Client({
   ],
 });
 
+const allowedScrapeUsers = new Set();
+
 client.on("messageCreate", async (message) => {
-  console.log(message.content);
   if (message.author.bot) return;
   if (message.content.startsWith("scrape")) {
+    if (!allowedScrapeUsers.has(message.author.id)) {
+      return message.reply(
+        "❌ Please run `/scrape` command first to authorize scraping."
+      );
+    }
+
     const url = message.content.split("scrape")[1].trim();
-    console.log(url);
+
+    if (!url) {
+      return message.reply("Please attach URL! Eg - scrape www.news.com");
+    }
     try {
       const rawData = await Scrapper(url);
-      console.log(rawData);
       const prompt = data(rawData);
       const response = await runMlModel(prompt);
 
+      // db create
+
       const summary = splitMessage(response);
 
-      console.log(summary);
+      for (const chunk of summary) {
+        await message.reply({ content: chunk });
+      }
 
-      console.log(rawData);
-      return message.reply({
-        content: `Hello ${message.author.username}! \n This is your response: \n ${summary}`,
-      });
     } catch (error) {
       console.error("error generating response!,", error);
     }
   }
 });
 
-client.on("interactionCreate", (interaction) => {
-  console.log("Interaction");
-  interaction.reply("success!");
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  const { commandName, user, channel, guild } = interaction;
+
+  if (commandName === "scrape") {
+    allowedScrapeUsers.add(user.id);
+
+    setTimeout(() => {
+      allowedScrapeUsers.delete(user.id);
+    }, 10 * 60 * 1000); // 10 minutes
+
+    return interaction.reply(
+      "✅ You're authorized for the next 10 minutes.\n Use `scrape www.example.com<your url>` \n Use /clear to exit the bot \n \n Responses are generated with AI. It might take some time."
+    );
+  }
+
+  if (commandName === "clear") {
+    // OPTIONAL: Only allow admins to run this
+    const member = await guild.members.fetch(user.id);
+    if (!member.permissions.has("Administrator")) {
+      return interaction.reply({
+        content: "❌ You do not have permission to run this command.",
+        ephemeral: true,
+      });
+    }
+    // Clear auth
+    allowedScrapeUsers.clear();
+
+    // Delete bot messages
+    const messages = await channel.messages.fetch({ limit: 100 });
+    const botMessages = messages.filter((msg) => msg.author.bot);
+
+    await Promise.all(
+      botMessages.map((msg) => msg.delete().catch(() => null)) // ignore errors for old messages
+    );
+
+    return interaction.reply({
+      content:
+        "🧹 Cleared server state and deleted bot messages. \n Please run /scrape to restart",
+      ephemeral: true,
+    });
+  }
 });
 
 client.login(process.env.BOT_TOKEN);

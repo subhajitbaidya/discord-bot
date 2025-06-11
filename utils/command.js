@@ -6,6 +6,10 @@ const commands = [
     name: "scrape",
     description: "Scrapes text data from a website",
   },
+  {
+    name: "clear",
+    description: "Clears the server for bot!",
+  },
 ];
 
 const rest = new REST({ version: "10" }).setToken(process.env.BOT_TOKEN);

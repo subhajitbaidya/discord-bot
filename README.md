@@ -1,14 +1,14 @@
 # 📌 Discord Bot
 
-An interactive discord bot to communicate with other users in a personal discord server
+An interactive discord bot to communicate with users 
 
 ---
 
 ## 🚀 Features
 
-- ✅ Feature 1
-- ✅ Feature 2
-- ✅ Feature 3
+- ✅ The bot can scrape text data from any website and summarize the data using DeepSeek R1 model. 
+- ✅ Summaries are sent as responses in chunks as discord bot replies. 
+- ✅ API access for generated data
 
 ---
 
@@ -16,7 +16,8 @@ An interactive discord bot to communicate with other users in a personal discord
 
 Include a screenshot or a link to a deployed demo (if applicable).
 
-![Demo Screenshot](link-to-image)
+![Demo Screenshot](![After running /scrape command](image.png))
+![Demo Screenshot](!![LLM response](image-1.png))
 
 [Live Demo](https://your-deployment-link.com)
 
