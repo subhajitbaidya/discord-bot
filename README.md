@@ -30,7 +30,6 @@ An interactive discord bot to communicate with users and scrape text data from p
 
 **Server and Libraries:** Node.js, Express.js, Discord.js, Cheerio
 **Database:** MongoDB
-**Others:** Docker, etc.
 
 ---
 
